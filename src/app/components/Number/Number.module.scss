@@ -1,0 +1,36 @@
+.number {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-height: fit-content;
+  user-select: none;
+
+  &.active {
+    user-select: text;
+  }
+}
+.line {
+  // display: inline-block;
+  // background-color: aqua;
+  width: fit-content;
+  height: fit-content;
+  transition: all 1.5s ease-in-out;
+  
+}
+.odometer {
+  display: flex;
+  overflow: hidden;
+}
+.dot {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 2px 0px 0px;
+
+  span {
+    display: block;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+}

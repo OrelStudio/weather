@@ -1,0 +1,109 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100%;
+  width: 40%;
+
+  &.open {
+    .search {
+      transform: translate(0,40vh) translate(-26vw, -50%) scale3d(1.5, 1.5, 1);
+    }
+
+    .background {
+      background-color: hsla(0, 0%, 0%, 0.459);
+      pointer-events: auto;
+    }
+    input {
+      border-bottom: 2px solid var(--dark-color);
+      &::placeholder {
+        color: var(--dark-color);
+      }
+    }
+    .icon {
+      color: var(--dark-color);
+    }
+  }
+}
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 106.8%;
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+
+  transition: all 0.5s ease-in-out;
+}
+.search {
+  position: absolute;
+  transition: all 0.5s ease-in-out;
+  padding-bottom: 2rem;
+  z-index: 2;
+}
+.input {
+  position: relative;
+  pointer-events: auto;
+  input {
+    font-size: 1rem;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 1em 0.15em 0;
+    border-bottom: 2px solid var(--main-color);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: transparent;
+    border-radius: 0;
+    outline: none;
+    caret-color: var(--dark-color);
+    &::placeholder {
+      color: var(--main-color);
+      transition: all 1s ease-in-out;
+    }
+    transition: all 1s ease-in-out;
+  }
+}
+.icon {
+  position: absolute;
+  right: 2px;
+  color: var(--main-color);
+  font-size: 1rem;
+  cursor: text !important;
+  top: 50%;
+  transform: translateY(-50%);
+
+  transform: color 1s ease-in-out;
+}
+
+.skeleton {
+  width: -webkit-fill-available !important;
+}
+
+@media (min-width: 768px) {
+  .input {
+    input {
+      font-size: 1.1em;
+    }
+  }
+  .icon {
+    font-size: 1.1em;
+    transform: translateY(-50%);
+  }
+  .search {
+    padding-bottom: 1rem;
+  }
+  .wrapper {
+    width: 20%;
+
+    &.open {
+      .search {
+        transform: translate(0,40vh) translate(-42vw,-50%) scale(2);
+      }
+    }
+  }
+}

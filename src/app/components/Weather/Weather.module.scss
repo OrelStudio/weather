@@ -1,0 +1,53 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: var(--dark-color);
+  font-weight: bold;
+  font-size: 19px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.section {
+  color: var(--main-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.boxContainer {
+  width: fit-content;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 10px;
+}
+
+.forecastWrapper {
+  height: 100%;
+  max-height: 220px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  // hide scrollbar
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.longSection {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  color: var(--main-color);
+  
+  p {
+    padding: 15px 0 0 15px;
+  }
+}
+
+@media (min-width: 805px) {
+  .section {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
