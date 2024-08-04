@@ -34,16 +34,21 @@ const fetcher = (url: string) => fetch(url).then((response) => {
   return response.json()
 })
 
-interface weatherProps {
+interface WeatherProps {
   location: Location | null
   // eslint-disable-next-line no-unused-vars
   onSelect: (result: resultType) => void
 }
 
-const getFeelsLikeDesc = (feelsLike: number | undefined, temperature: number | undefined) => {
-  if (!feelsLike || !temperature) return null
+const getFeelsLikeDesc = (feelsLike: number, temperature: number): string => {
   if (feelsLike === temperature) return 'Same as current temperature'
   return feelsLike > temperature ? 'Warmer than current temperature' : 'Colder than current temperature'
+}
+
+type Weather = ReturnType<typeof processWeatherData>
+
+const isWeatherValid = (weather?: Weather): weather is (Weather & {current: {feelsLike: number, temperature: number}}) => {
+  return Number.isInteger(weather?.current.feelsLike) && Number.isInteger(weather?.current.temperature)
 }
 
 const getPerccipitationDesc = (
@@ -52,9 +57,9 @@ const getPerccipitationDesc = (
   daysUntilLast: number,
 ) => (nextPrecipitation ? `${nextPrecipitation} mm expected in ${hoursUntilNextPrecipitation} hours` : `None expected in the next ${daysUntilLast} days`)
 
-const Weather: React.FC<weatherProps> = ({location, onSelect}) => {
+const Weather: React.FC<WeatherProps> = ({location, onSelect}) => {
   const {data} = useSWR(location ? getLink(location.latitude, location.longitude) : null, fetcher)
-  const weather = useMemo(() => (data ? processWeatherData(data) : null), [data])
+  const weather = useMemo(() => (data ? processWeatherData(data) : undefined), [data])
 
   return (
     <Overlay weatherCode={weather?.current.weatherCode || 0}>
@@ -90,9 +95,7 @@ const Weather: React.FC<weatherProps> = ({location, onSelect}) => {
               <GenericData
                 title={weather ? `${weather?.current.feelsLike}°` : null}
                 subtitle=''
-                description={
-                  getFeelsLikeDesc(weather?.current.feelsLike, weather?.current.temperature)
-                }
+                description={isWeatherValid(weather) ? getFeelsLikeDesc(weather.current.feelsLike, weather.current.temperature) : null}
               />
             </Box>
             <Box title='Humidity' isLoading={!data}>

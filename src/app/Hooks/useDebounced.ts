@@ -1,6 +1,5 @@
 import {useCallback, useRef} from 'react'
 
-// eslint-disable-next-line no-unused-vars
 const useDebounced = <T extends (...args: any[]) => void>(callback: T, delay: number) => {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 

@@ -2,14 +2,22 @@
 
 import {useEffect, useRef} from 'react'
 
-const usePrevious = (value: any) => {
+const usePrevious = <T>(value: T): T => {
   const ref = useRef(value)
 
   useEffect(() => {
-    if (value) {
-      ref.current = value
-    }
+    ref.current = value
   })
+
+  return ref.current
+}
+
+const useDataLinger = <T>(value: T) => {
+  const ref = useRef(value)
+
+  if (!!value) {
+    ref.current = value
+  }
 
   return ref.current
 }
