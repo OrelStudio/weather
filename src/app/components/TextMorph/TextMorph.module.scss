@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
+.wrapper {
+  margin-bottom: 20px;
+}
+.container {
+	filter: url(#threshold) blur(0.6px);
+
+  span {
+    position: absolute;
+    white-space: nowrap;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+  }
+}
+
+.prevText {
+  user-select: none;
+}
+@media (min-width: 768px) {
+  .wrapper {
+    margin-bottom: 0;
+  }
+}

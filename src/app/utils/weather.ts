@@ -1,3 +1,5 @@
+import {WeatherData, RawWeatherData} from '../types/WeatherData'
+
 const codesEnglish: Record<number, string> = {
   0: 'Clear Sky',
   1: 'Mainly Clear',
@@ -97,7 +99,7 @@ const getImageName = (code: number): string => images[code]
 
 const getEffect = (code: number): Effect => effects[code]
 
-const processWeatherData = (data: any) => {
+const processWeatherData = (data: RawWeatherData): WeatherData => {
   // time format is yyyy-mm-ddThh:mm
   const currentTime = data.current.time.split('T')
   const currentDayIndex = data.daily.time.findIndex((time: string) => time === currentTime[0])
@@ -141,8 +143,8 @@ const processWeatherData = (data: any) => {
     nextPrecipitation,
     hoursUntilNextPrecipitation: Math.abs(hoursUntilNextPrecipitation),
     daysUntilLast,
-    wind_speed: data.current.wind_speed_10m,
-    wind_direction: data.current.wind_direction_10m,
+    windSpeed: data.current.wind_speed_10m,
+    windDirection: data.current.wind_direction_10m,
 
     high: data.daily.temperature_2m_max[currentDayIndex],
     low: data.daily.temperature_2m_min[currentDayIndex],

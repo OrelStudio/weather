@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {SearchData} from '@/app/types/search'
+import {SearchData} from '@/app/types/Search'
 
 const search = (query: string): Promise<SearchData[]> => axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${query}`).then((response) => {
   const resData = response.data

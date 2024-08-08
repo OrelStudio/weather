@@ -1,130 +1,125 @@
-import React, {useMemo, memo} from 'react'
-import useSWR from 'swr'
+import React, {memo} from 'react'
 
 import {Skeleton} from 'antd'
 
-import Overlay from '@/app/components/Overlay'
-import Headline from '@/app/components/Headline'
-import DateSection from '@/app/components/DateSection'
+import Headline from './Headline'
+import DateSection from './DateSection'
+
 import Box from '@/app/components/Box'
 import Compass from '@/app/components/Compass'
 import GenericData from '@/app/components/Box/GenericData'
 import Forecast from '@/app/components/Forecast'
 import Search from '@/app/components/Search'
 
-import {processWeatherData} from '@/app/utils/weather'
-import {Location} from '@/app/types/location'
+import {WeatherData} from '@/app/types/WeatherData'
+import {Location} from '@/app/types/Location'
 
 import styles from './Weather.module.scss'
-import {resultType} from '@/app/types/result'
+import {ResultType} from '@/app/types/Result'
 
-const getLink = (latitude: number, longitude: number) => (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,dew_point_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers,snowfall,snow_depth,weather_code,cloud_cover,visibility,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_probability_max&past_days=2`)
-
-const fetcher = (url: string) => fetch(url).then((response) => {
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  // artificially slow down the response
-  // return new Promise((resolve) => {
-  //   setTimeout(() => {
-  //     resolve(response.json())
-  //   }, 100000)
-  // })
-  return response.json()
-})
-
-interface weatherProps {
+interface WeatherProps {
   location: Location | null
-  // eslint-disable-next-line no-unused-vars
-  onSelect: (result: resultType) => void
+  onSelect: (result: ResultType) => void
+  weather: WeatherData | null
+  isLoading: boolean
 }
 
-const getFeelsLikeDesc = (feelsLike: number | undefined, temperature: number | undefined) => {
-  if (!feelsLike || !temperature) return null
-  if (feelsLike === temperature) return 'Same as current temperature'
+const getFeelsLikeDescription = (feelsLike: number, temperature: number) => {
+  if (feelsLike === temperature) {
+    return 'Same as current temperature'
+  }
   return feelsLike > temperature ? 'Warmer than current temperature' : 'Colder than current temperature'
 }
 
-const getPerccipitationDesc = (
-  nextPrecipitation: number,
+const getPerccipitationDescription = (
+  nextPrecipitation: number | null,
   hoursUntilNextPrecipitation: number,
   daysUntilLast: number,
 ) => (nextPrecipitation ? `${nextPrecipitation} mm expected in ${hoursUntilNextPrecipitation} hours` : `None expected in the next ${daysUntilLast} days`)
 
-const Weather: React.FC<weatherProps> = ({location, onSelect}) => {
-  const {data} = useSWR(location ? getLink(location.latitude, location.longitude) : null, fetcher)
-  const weather = useMemo(() => (data ? processWeatherData(data) : null), [data])
+const isWeatherValid = (
+  weather: WeatherData | null,
+): weather is (WeatherData & {current: {feelsLike: number, temperature: number}}
+) => (!!weather && typeof weather.current.feelsLike === 'number' && typeof weather.current.temperature === 'number')
 
-  return (
-    <Overlay weatherCode={weather?.current.weatherCode || 0}>
-      <div className={styles.header}>
-        <div>
-          <DateSection
-            year={weather?.current.year}
-            month={weather?.current.month}
-            day={weather?.current.day}
-            isLoading={!data}
-          />
-          <div className={styles.location}>
-            {!data ? <Skeleton.Input active /> : <h1>{`${location?.name}, ${location?.countryCode}`}</h1>}
-          </div>
-        </div>
-        <Search onSelect={onSelect} isLoading={!data} />
-      </div>
-      <div className='content'>
-        <Headline
-          className={styles.section}
-          high={weather?.current.high}
-          low={weather?.current.low}
-          weatherCode={weather?.current.weatherCode}
-          temperature={weather?.current.temperature}
-          isLoading={!data}
+/**
+ * @description Display the weather page
+ * @prop {Location} location - The location to display
+ * @prop {function} onSelect - The function to call when a location is selected
+ * @prop {WeatherData} weather - The weather data to display
+ * @prop {boolean} isLoading - Whether the component is loading
+ * @returns {React.ReactElement} The Weather Page
+ */
+const Weather: React.FC<WeatherProps> = ({location, onSelect, weather, isLoading}) => (
+  <>
+    <div className={styles.header}>
+      <div>
+        <DateSection
+          year={weather?.current.year || ''}
+          month={weather?.current.month || ''}
+          day={weather?.current.day || ''}
+          isLoading={isLoading}
         />
-        <div className={styles.section}>
-          <div className={styles.boxContainer}>
-            <Box title='Wind' isLoading={!data}>
-              <Compass direction={weather?.current.wind_direction} title={weather?.current.wind_speed} subtitle='km/h' />
-            </Box>
-            <Box title='Feels Like' isLoading={!data}>
-              <GenericData
-                title={weather ? `${weather?.current.feelsLike}°` : null}
-                subtitle=''
-                description={
-                  getFeelsLikeDesc(weather?.current.feelsLike, weather?.current.temperature)
-                }
-              />
-            </Box>
-            <Box title='Humidity' isLoading={!data}>
-              <GenericData
-                title={weather ? `${weather?.current.humidity}%` : null}
-                subtitle=''
-                description={weather ? `The dew point is ${weather?.current.dew_point}° right now` : null}
-              />
-            </Box>
-            <Box title='Precipitation' isLoading={!data}>
-              <GenericData
-                title={weather ? `${weather?.current.precipitation} mm` : null}
-                subtitle='in last 24h'
-                description={weather
-                  ? getPerccipitationDesc(
-                    weather?.current.nextPrecipitation,
-                    weather?.current.hoursUntilNextPrecipitation,
-                    weather?.current.daysUntilLast,
-                  ) : null}
-              />
-            </Box>
-          </div>
-        </div>
-        <div className={styles.longSection}>
-          {!data ? <Skeleton.Input active style={{marginTop: '15px', marginLeft: '15px'}} /> : <p>Forecast</p>}
-          <div className={styles.forecastWrapper}>
-            <Forecast forecast={weather?.forecast} />
-          </div>
+        <div className={styles.location}>
+          {isLoading ? <Skeleton.Input active /> : <h1>{`${location?.name}, ${location?.countryCode}`}</h1>}
         </div>
       </div>
-    </Overlay>
-  )
-}
+      <Search onSelect={onSelect} isLoading={isLoading} />
+    </div>
+    <div className='content'>
+      <Headline
+        className={styles.section}
+        high={weather?.current.high || 0}
+        low={weather?.current.low || 0}
+        weatherCode={weather?.current.weatherCode || 0}
+        temperature={weather?.current.temperature || 0}
+        isLoading={isLoading}
+      />
+      <div className={styles.section}>
+        <div className={styles.boxContainer}>
+          <Box title='Wind' isLoading={isLoading}>
+            <Compass direction={weather?.current.windDirection} title={weather?.current.windSpeed} subtitle='km/h' />
+          </Box>
+          <Box title='Feels Like' isLoading={isLoading}>
+            <GenericData
+              title={weather ? `${weather?.current.feelsLike}°` : null}
+              subtitle=''
+              description={isWeatherValid(weather)
+                ? getFeelsLikeDescription(
+                  weather?.current.feelsLike,
+                  weather?.current.temperature,
+                ) : null}
+            />
+          </Box>
+          <Box title='Humidity' isLoading={isLoading}>
+            <GenericData
+              title={weather ? `${weather?.current.humidity}%` : null}
+              subtitle=''
+              description={weather ? `The dew point is ${weather?.current.dew_point}° right now` : null}
+            />
+          </Box>
+          <Box title='Precipitation' isLoading={isLoading}>
+            <GenericData
+              title={weather ? `${weather?.current.precipitation} mm` : null}
+              subtitle='in last 24h'
+              description={isWeatherValid(weather)
+                ? getPerccipitationDescription(
+                  weather?.current.nextPrecipitation,
+                  weather?.current.hoursUntilNextPrecipitation,
+                  weather?.current.daysUntilLast,
+                ) : null}
+            />
+          </Box>
+        </div>
+      </div>
+      <div className={styles.longSection}>
+        {isLoading ? <Skeleton.Input active style={{marginTop: '15px', marginLeft: '15px'}} /> : <p>Forecast</p>}
+        <div className={styles.forecastWrapper}>
+          <Forecast forecast={weather?.forecast || []} />
+        </div>
+      </div>
+    </div>
+  </>
+)
 
 export default memo(Weather)

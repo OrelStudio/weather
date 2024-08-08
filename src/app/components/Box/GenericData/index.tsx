@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './GenericData.module.scss'
 
 import usePrevious from '@/app/Hooks/usePrevious'
+import useDataLinger from '@/app/Hooks/useDataLinger'
 
 interface GenericDataProps {
   title: string | null,
@@ -9,10 +10,14 @@ interface GenericDataProps {
   description: string | null
 }
 
+/**
+ * @description A component to display generic data inside a box
+ * @prop {string} title - The title of the data
+ */
 const GenericData: React.FC<GenericDataProps> = ({title, subtitle, description}) => {
-  const prevTitle = usePrevious(title)
-  const prevSubtitle = usePrevious(subtitle)
-  const prevDescription = usePrevious(description)
+  const prevTitle = useDataLinger(usePrevious(title))
+  const prevSubtitle = useDataLinger(usePrevious(subtitle))
+  const prevDescription = useDataLinger(usePrevious(description))
 
   return (
     <div className={styles.wrapper}>

@@ -11,19 +11,24 @@ import useOutside from '@/app/Hooks/useOutside'
 import useDebounced from '@/app/Hooks/useDebounced'
 import search from '@/app/utils/search'
 
-import {resultType} from '@/app/types/result'
+import {ResultType} from '@/app/types/Result'
 import styles from './Search.module.scss'
 
 interface SearchProps {
-  // eslint-disable-next-line no-unused-vars
-  onSelect: (result: resultType) => void,
+  onSelect: (result: ResultType) => void,
   isLoading: boolean,
 }
 
+/**
+ * @description A search component, auto-completes the search query with a list of countries
+ * @prop {function} onSelect - The function to call when a country is selected
+ * @prop {boolean} isLoading - Whether the component is loading
+ * @returns {React.ReactElement} The Search component
+ */
 const Search: React.FC<SearchProps> = ({onSelect, isLoading}) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
-  const [countries, setCountries] = useState<resultType[]>([])
+  const [countries, setCountries] = useState<ResultType[]>([])
   const [value, setValue] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
@@ -41,13 +46,12 @@ const Search: React.FC<SearchProps> = ({onSelect, isLoading}) => {
   }, [])
 
   const searchCountry = useDebounced((query: string) => {
+    setCountries([])
     if (!query) {
-      setCountries([])
       return
     }
     search(query).then((data) => {
       if (!data) {
-        setCountries([])
         return
       }
       const result = data.map((c) => ({
@@ -82,7 +86,7 @@ const Search: React.FC<SearchProps> = ({onSelect, isLoading}) => {
     }
   }, [close])
 
-  const select = useCallback((result: resultType) => {
+  const select = useCallback((result: ResultType) => {
     close()
     onSelect(result)
   }, [close, onSelect])

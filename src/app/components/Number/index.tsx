@@ -1,33 +1,10 @@
 'use client'
 
-import React, {useMemo, memo} from 'react'
-import classNames from 'classnames'
+import React, {useMemo} from 'react'
+
+import Line from './Line'
 
 import styles from './Number.module.scss'
-
-interface LineProps {
-  number: number,
-  fontSize: number
-}
-
-const Line: React.FC<LineProps> = ({number = 0, fontSize = 32}) => {
-  const transformY = useMemo(() => (`translateY(-${(number) * 10}%)`), [number])
-
-  return (
-    <div className={styles.line} style={{transform: transformY}}>
-      <div className={styles.block} style={{fontSize}}>
-        {Array.from({length: 10}, (_, i) => i).map((i) => (
-          <div
-            className={classNames(styles.number, {[styles.active]: i === number})}
-            key={i}
-          >
-            {i}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 interface NumberProps {
   number: number
@@ -35,7 +12,13 @@ interface NumberProps {
   className: string
 }
 
-// Odometer effect with effect that numbers are moving up or down
+/**
+ * @description A component to display a number with odometer effect with effect
+ * that numbers are moving up or down
+ * @param {number} number - The number to display
+ * @param {number} fontSize - The font size of the number
+ * @returns {React.ReactElement} The Number component
+ */
 const Number: React.FC<NumberProps> = ({number = 0, fontSize = 32, className = ''}) => {
   const isNegative = useMemo(() => number < 0, [number])
   const nums = useMemo(() => (String(Math.abs(number)).split('.')), [number])
@@ -46,7 +29,8 @@ const Number: React.FC<NumberProps> = ({number = 0, fontSize = 32, className = '
     <div className={`${styles.number} ${className}`}>
       <div className={styles.odometer} style={{height: odometerHeight}}>
         {isNegative && <div className={styles.negative} style={{fontSize}}>-</div>}
-        {nums[0].split('').map((n) => (<Line key={n} number={parseInt(n, 10)} fontSize={fontSize} />))}
+        {/* eslint-disable-next-line react/no-array-index-key */}
+        {nums[0].split('').map((n, i) => (<Line key={i} number={parseInt(n, 10)} fontSize={fontSize} />))}
 
         {/* {nums[1] && (
           <div className={styles.dot}>
@@ -61,4 +45,4 @@ const Number: React.FC<NumberProps> = ({number = 0, fontSize = 32, className = '
   )
 }
 
-export default memo(Number)
+export default Number

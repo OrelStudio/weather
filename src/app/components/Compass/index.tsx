@@ -2,19 +2,27 @@ import React, {memo} from 'react'
 import SVGCompass from './SVGCompass'
 
 import usePrevious from '@/app/Hooks/usePrevious'
+import useDataLinger from '@/app/Hooks/useDataLinger'
 
 import styles from './Compass.module.scss'
 
 interface CompassProps {
-  direction: number
-  title: string
+  direction: number | undefined
+  title: number | undefined
   subtitle: string
 }
 
+/**
+ * @description A component to display a compass with a title and subtitle
+ * @prop {number} direction - The direction of the compass
+ * @prop {number} title - The title of the compass
+ * @prop {string} subtitle - The subtitle of the compass
+ * @returns {React.ReactElement} The Compass component
+ */
 const Compass: React.FC<CompassProps> = ({direction, title, subtitle}) => {
-  const prevTitle = usePrevious(title)
-  const prevDirection = usePrevious(direction)
-  const prevSubtitle = usePrevious(subtitle)
+  const prevTitle = useDataLinger(usePrevious(title))
+  const prevDirection = useDataLinger(usePrevious(direction))
+  const prevSubtitle = useDataLinger(usePrevious(subtitle))
 
   return (
     <div className={styles.wrapper}>

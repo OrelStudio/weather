@@ -2,13 +2,16 @@
 
 import {useEffect, useRef} from 'react'
 
-const usePrevious = (value: any) => {
+/**
+ * @description A hook that returns the previous value of given value
+ * @param {T} value - The value
+ * @returns {T} Previous value
+ */
+const usePrevious = <T>(value: T) => {
   const ref = useRef(value)
 
   useEffect(() => {
-    if (value) {
-      ref.current = value
-    }
+    ref.current = value
   })
 
   return ref.current

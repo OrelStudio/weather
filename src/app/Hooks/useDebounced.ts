@@ -1,6 +1,11 @@
 import {useCallback, useRef} from 'react'
 
-// eslint-disable-next-line no-unused-vars
+/**
+ * @description A hook that debounces a function
+ * @param {T} callback - The function to debounce
+ * @param {number} delay - The delay in milliseconds
+ * @returns {Function} The debounced function
+ */
 const useDebounced = <T extends (...args: any[]) => void>(callback: T, delay: number) => {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 

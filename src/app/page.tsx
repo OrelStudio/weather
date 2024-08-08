@@ -1,33 +1,43 @@
 'use client'
 
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect} from 'react'
 
+import Overlay from '@/app/components/Overlay'
 import Weather from '@/app/components/Weather'
 
+import useWeather from '@/app/Hooks/useWeather'
+import useLocalStorage from '@/app/Hooks/useLocalStorage'
+
 import getLocation from '@/app/utils/location'
-import {Location} from '@/app/types/location'
-import {resultType} from '@/app/types/result'
+import {Location} from '@/app/types/Location'
+import {ResultType} from '@/app/types/Result'
+
+// TODO: not single line if statement:                       Done
+// TODO: use Description not Desc:                           Done
+// TODO: add <T>(value: T) => T to usePrevious:              Done
+// TODO: types start with capital letter:                    Done
+// TODO: add JSDOC:                                          Done
+// TODO: implement useLocalStorage:                          Done
+// TODO: replace images src with static images:              Done
+// TODO: add forlder for components that are used only once: Done
 
 const Home = () => {
-  const [location, setLocation] = useState<Location | null>({name: 'London', latitude: 51.5074, longitude: 0.1278, countryCode: 'GB', country: 'UK'})
-  // const weather = useWeather(location?.latitude || 0, location?.longitude || 0)
+  const [location, setLocation] = useLocalStorage<Location | null>('location', null)
+  const weatherData = useWeather(location?.latitude || 0, location?.longitude || 0)
 
   const checkLocation = useCallback(() => {
-    const localStorageItem = localStorage.getItem('location')
-    if (localStorageItem) {
-      setLocation(JSON.parse(localStorageItem))
-    } else {
+    // if location is null
+    // it means that it wasnt in local storage yet so we need to get it then set it
+    if (!location) {
       getLocation().then((result) => {
         setLocation(result)
-        localStorage.setItem('location', JSON.stringify(result))
       })
     }
-  }, [])
+  }, [location, setLocation])
 
-  const onSelect = useCallback((result: resultType) => {
+  const onSelect = useCallback((result: ResultType) => {
     setLocation(result)
-    localStorage.setItem('location', JSON.stringify(result))
-  }, [])
+  }, [setLocation])
 
   useEffect(() => {
     checkLocation()
@@ -35,7 +45,14 @@ const Home = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Weather location={location} onSelect={onSelect} />
+    <Overlay weatherCode={weatherData?.current.weatherCode || 0}>
+      <Weather
+        location={location}
+        onSelect={onSelect}
+        weather={weatherData}
+        isLoading={!weatherData || !location}
+      />
+    </Overlay>
   )
 }
 

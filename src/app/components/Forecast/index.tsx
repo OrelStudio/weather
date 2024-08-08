@@ -2,14 +2,19 @@
 
 import React, {memo, useRef} from 'react'
 import {LineChart, Line, XAxis, ResponsiveContainer} from 'recharts'
-import {forecastType} from '@/app/types/forecast'
+import {ForecastType} from '@/app/types/Forecast'
 
 import styles from './Forecast.module.scss'
 
 interface ForecastProps {
-  forecast: forecastType[]
+  forecast: ForecastType[] | []
 }
 
+/**
+ * @description A component to display a graph of the forecast
+ * @prop {ForecastType[]} forecast - The forecast to display
+ * @returns {React.ReactElement} The Forecast component
+ */
 const Forecast: React.FC<ForecastProps> = ({forecast}) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
 

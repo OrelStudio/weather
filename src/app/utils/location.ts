@@ -1,5 +1,5 @@
 import search from './search'
-import {Location} from '../types/location'
+import {Location} from '../types/Location'
 
 const getState = () => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone

@@ -1,6 +1,7 @@
 {
   "extends" : ["airbnb", "next/core-web-vitals"],
-  // linebreak-style to be not forced
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "linebreak-style": ["error", "unix"],
     "semi": ["error", "never"],
@@ -23,7 +24,9 @@
       }
     ],
     "jsx-quotes": ["error", "prefer-single"],
-    "object-curly-newline": "off"
-
+    "object-curly-newline": "off",
+    "curly": ["error", "all"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }

@@ -1,0 +1,15 @@
+.line {
+  // display: inline-block;
+  // background-color: aqua;
+  width: fit-content;
+  height: fit-content;
+  transition: all 1.5s ease-in-out;
+  
+}
+.number {
+  user-select: none;
+
+  &.active {
+    user-select: text;
+  }
+}

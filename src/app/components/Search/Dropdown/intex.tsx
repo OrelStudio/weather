@@ -1,20 +1,19 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, memo} from 'react'
 import Image from 'next/image'
 import classNames from 'classnames'
 
-import {resultType} from '@/app/types/result'
+import {ResultType} from '@/app/types/Result'
 
 import styles from './Dropdown.module.scss'
 
 interface DropdownProps {
-  data: resultType[]
+  data: ResultType[]
   isOpen: boolean
-  // eslint-disable-next-line no-unused-vars
-  onSelect: (result: resultType) => void
+  onSelect: (result: ResultType) => void
 }
 
 const Dropdown: React.FC<DropdownProps> = ({data, isOpen, onSelect}) => {
-  const onClick = useCallback((result: resultType) => {
+  const onClick = useCallback((result: ResultType) => {
     onSelect(result)
   }, [onSelect])
 
@@ -38,4 +37,4 @@ const Dropdown: React.FC<DropdownProps> = ({data, isOpen, onSelect}) => {
   )
 }
 
-export default Dropdown
+export default memo(Dropdown)
