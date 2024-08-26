@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './GenericData.module.scss'
 
-import usePrevious from '@/app/hooks1/usePrevious'
-import useDataLinger from '@/app/hooks1/useDataLinger'
+import usePrevious from '@/app/hooks/usePrevious'
+import useDataLinger from '@/app/hooks/useDataLinger'
 
 interface GenericDataProps {
   title: string | null,

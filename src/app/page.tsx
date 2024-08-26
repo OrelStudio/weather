@@ -5,8 +5,8 @@ import {useCallback, useEffect} from 'react'
 import Overlay from '@/app/components/Overlay'
 import Weather from '@/app/components/Weather'
 
-import useWeather from '@/app/hooks1/useWeather'
-import useLocalStorage from '@/app/hooks1/useLocalStorage'
+import useWeather from '@/app/hooks/useWeather'
+import useLocalStorage from '@/app/hooks/useLocalStorage'
 
 import getLocation from '@/app/utils/location'
 import {Location} from '@/app/types/Location'

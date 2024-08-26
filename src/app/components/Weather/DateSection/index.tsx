@@ -1,8 +1,8 @@
 import React, {memo} from 'react'
 import {Skeleton} from 'antd'
 
-import usePrevious from '@/app/hooks1/usePrevious'
-import useDataLinger from '@/app/hooks1/useDataLinger'
+import usePrevious from '@/app/hooks/usePrevious'
+import useDataLinger from '@/app/hooks/useDataLinger'
 
 import styles from './DateSection.module.scss'
 
