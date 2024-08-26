@@ -12,15 +12,6 @@ import getLocation from '@/app/utils/location'
 import {Location} from '@/app/types/Location'
 import {ResultType} from '@/app/types/Result'
 
-// TODO: not single line if statement:                       Done
-// TODO: use Description not Desc:                           Done
-// TODO: add <T>(value: T) => T to usePrevious:              Done
-// TODO: types start with capital letter:                    Done
-// TODO: add JSDOC:                                          Done
-// TODO: implement useLocalStorage:                          Done
-// TODO: replace images src with static images:              Done
-// TODO: add forlder for components that are used only once: Done
-
 const Home = () => {
   const [location, setLocation] = useLocalStorage<Location | null>('location', null)
   const weatherData = useWeather(location?.latitude || 0, location?.longitude || 0)
