@@ -1,8 +1,8 @@
 import React, {memo} from 'react'
 import SVGCompass from './SVGCompass'
 
-import usePrevious from '@/app/Hooks/usePrevious'
-import useDataLinger from '@/app/Hooks/useDataLinger'
+import usePrevious from '@/app/hooks1/usePrevious'
+import useDataLinger from '@/app/hooks1/useDataLinger'
 
 import styles from './Compass.module.scss'
 

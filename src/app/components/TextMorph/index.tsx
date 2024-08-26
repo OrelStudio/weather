@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useCallback, memo} from 'react'
 
-import usePrevious from '@/app/Hooks/usePrevious'
+import usePrevious from '@/app/hooks1/usePrevious'
 import styles from './TextMorph.module.scss'
 
 interface TextMorphProps {

@@ -7,8 +7,8 @@ import {Skeleton} from 'antd'
 
 import Dropdown from './Dropdown/intex'
 
-import useOutside from '@/app/Hooks/useOutside'
-import useDebounced from '@/app/Hooks/useDebounced'
+import useOutside from '@/app/hooks1/useOutside'
+import useDebounced from '@/app/hooks1/useDebounced'
 import search from '@/app/utils/search'
 
 import {ResultType} from '@/app/types/Result'

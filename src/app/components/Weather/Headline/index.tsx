@@ -3,8 +3,8 @@
 import React, {useMemo, useState, useEffect, memo} from 'react'
 import {Space, Skeleton} from 'antd'
 
-import usePrevious from '@/app/Hooks/usePrevious'
-import useDataLinger from '@/app/Hooks/useDataLinger'
+import usePrevious from '@/app/hooks1/usePrevious'
+import useDataLinger from '@/app/hooks1/useDataLinger'
 
 import Number from '@/app/components/Number'
 import TextMorph from '@/app/components/TextMorph'
