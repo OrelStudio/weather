@@ -18,14 +18,14 @@ interface ImageObject {
 
 // Names of image files
 const images: ImageObject[] = [
-  {name: 'clearSky', src: '/clearSky.jpg', color: '#0c65d9'},
-  {name: 'darkClouds', src: '/darkClouds.png', color: '#4b4d5b'},
-  {name: 'drizzle', src: '/drizzle.jpg', color: '#cbd4db'},
-  {name: 'fog', src: '/fog.jpg', color: '#5d656e'},
-  {name: 'mainlyClear', src: '/mainlyClear.jpg', color: '#2389ed'},
-  {name: 'overcast', src: '/overcast.png', color: '#686868'},
-  {name: 'partlyCloudy', src: '/partlyCloudy.jpg', color: '#5296c5'},
-  {name: 'storm', src: '/storm.jpg', color: '#404d55'},
+  {name: 'clearSky', src: 'https://orelstudio.github.io/weather/clearSky.jpg', color: '#0c65d9'},
+  {name: 'darkClouds', src: 'https://orelstudio.github.io/weather/darkClouds.png', color: '#4b4d5b'},
+  {name: 'drizzle', src: 'https://orelstudio.github.io/weather/drizzle.jpg', color: '#cbd4db'},
+  {name: 'fog', src: 'https://orelstudio.github.io/weather/fog.jpg', color: '#5d656e'},
+  {name: 'mainlyClear', src: 'https://orelstudio.github.io/weather/mainlyClear.jpg', color: '#2389ed'},
+  {name: 'overcast', src: 'https://orelstudio.github.io/weather/overcast.png', color: '#686868'},
+  {name: 'partlyCloudy', src: 'https://orelstudio.github.io/weather/partlyCloudy.jpg', color: '#5296c5'},
+  {name: 'storm', src: 'https://orelstudio.github.io/weather/storm.jpg', color: '#404d55'},
 ]
 // #0a518b
 interface OverlayProps {
