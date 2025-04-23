@@ -15,8 +15,8 @@ interface BoxProps {
  * @prop {React.ReactNode} children - The children of the component
  * @returns {React.ReactElement} The Box component
  */
-const Box: React.FC<BoxProps> = ({ children, title, isLoading }) => (
-  <div className={classNames(styles.box, { [styles.loading]: isLoading })}>
+const Box: React.FC<BoxProps> = ({children, title, isLoading}) => (
+  <div className={classNames(styles.box, {[styles.loading]: isLoading})}>
     <p className={styles.description}>
       {isLoading ? <Skeleton active /> : title}
     </p>
