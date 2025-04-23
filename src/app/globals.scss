@@ -51,97 +51,97 @@ body.noscroll {
 
 // Tweeks for recharts, it's here because it's a global style
 
-.recharts-cartesian-axis-line {
-  display: none;
-}
+// .recharts-cartesian-axis-line {
+//   display: none;
+// }
 
-.recharts-cartesian-axis-tick-line {
-  display: none;
-}
+// .recharts-cartesian-axis-tick-line {
+//   display: none;
+// }
 
-.recharts-surface {
-  overflow-x: visible;
-  overflow-y: hidden;
-  clip-path: inset(0 0 0 5%);
-}
+// .recharts-surface {
+//   overflow-x: visible;
+//   overflow-y: hidden;
+//   clip-path: inset(0 0 0 5%);
+// }
 
-.recharts-line-curve {
-  stroke: var(--dark-color);
-  clip-path: inset(0 0 0 12.5%);
-}
+// .recharts-line-curve {
+//   stroke: var(--dark-color);
+//   clip-path: inset(0 0 0 12.5%);
+// }
 
-.recharts-line-dots * {
-  fill: var(--main-color);
-  stroke: var(--main-color);
+// .recharts-line-dots * {
+//   fill: var(--main-color);
+//   stroke: var(--main-color);
 
-  &::after {
-    content: '';
-    display: block;
-    width: 140px;
-    height: 140px;
-    background-color: var(--dark-color);
-    border-radius: 50%;
-  }
-}
+//   &::after {
+//     content: '';
+//     display: block;
+//     width: 140px;
+//     height: 140px;
+//     background-color: var(--dark-color);
+//     border-radius: 50%;
+//   }
+// }
 
-circle:nth-child(1)::after {
-  content: '';
-  position: absolute;
-  left: 50px; /* Circle cx position */
-  top: 60px;  /* Circle cy position + radius */
-  width: 2px;
-  height: 60px; /* Length of the line */
-  background-color: black; /* Color of the line */
-}
+// circle:nth-child(1)::after {
+//   content: '';
+//   position: absolute;
+//   left: 50px; /* Circle cx position */
+//   top: 60px;  /* Circle cy position + radius */
+//   width: 2px;
+//   height: 60px; /* Length of the line */
+//   background-color: black; /* Color of the line */
+// }
 
 .recharts-line {
-  transform: translateY(27px);
+  // transform: translateY(27px);
 }
 
 // text above the line
 .recharts-label-list * {
-  transform: translateY(-12px);
-  transition: all 1s;
-  // opacity from 0 to 1
-  animation: fadeIn 1s;
-  fill: var(--main-color);
-  stroke: var(--main-color);
-  overflow: visible;
+  // transform: translateY(-12px);
+  // transition: all 1s;
+  // // opacity from 0 to 1
+  // animation: fadeIn 1s;
+  // fill: var(--main-color);
+  // stroke: var(--main-color);
+  // overflow: visible;
 }
 
 // fixing the placements
-.recharts-cartesian-axis-tick-value {
-  font-size: 1.3rem;
-  fill: var(--dark-color);
-  // stroke: $recharts-dark-color;
-  stroke-width: 0.3;
-  animation: fadeIn 1s;
-}
+// .recharts-cartesian-axis-tick-value {
+//   font-size: 1.3rem;
+//   fill: var(--dark-color);
+//   // stroke: $recharts-dark-color;
+//   stroke-width: 0.3;
+//   animation: fadeIn 1s;
+// }
 
 .recharts-xAxis {
-  transform: translate(-25px, -52%);
+  // transform: translate(-25px, -40%);
 }
 .recharts-surface {
-  transform: translateX(-25px);
+  // transform: translateX(-25px);
 }
 
-.recharts-cartesian-axis-ticks *:last-child {
-  transform: translateX(10px);
-}
+// .recharts-cartesian-axis-ticks *:last-child {
+//   transform: translateX(10px);
+// }
 
-@media (min-width: 1125px) {
-  .recharts-cartesian-axis-tick-value {
-    font-size: 1.5rem;
-  }
+// @media (min-width: 1125px) {
+//   .recharts-cartesian-axis-tick-value {
+//     font-size: 1.5rem;
+//   }
   
-  .recharts-xAxis {
-    transform: translate(-45px, -47%);
-    margin-top: 5px;
-  }
-  .recharts-line {
-    transform: translate(-25px, 13px);
-  }
-}
+//   .recharts-xAxis {
+//     transform: translate(-45px, -47%);
+//     margin-top: 5px;
+//   }
+//   .recharts-line {
+//     transform: translate(-25px, 13px);
+//   }
+// }
 
 @keyframes fadeIn {
   from {

@@ -11,9 +11,16 @@
   line-height: 2rem;
 }
 .title {
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 2.4vw + 0.4rem, 1.8rem);
   padding-top: 5px;
 }
 .subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 1.8vw + 0.3rem, 1.1rem);
+}
+.description {
+  font-size: clamp(0.8rem, 1.4vw + 0.4rem, 1rem);
+  // white-space: normal;
+  // overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 10px;
 }

@@ -3,7 +3,8 @@
 }
 .arrow {
   transform-origin: 50% 50%;
-  transition: transform 1s ease-in-out;
+  transition: transform 0.9s ease-in-out;
+  pointer-events: none;
 
   #Circle {
     fill: var(--dark-color);
@@ -11,9 +12,7 @@
   }
 }
 .inner {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  background-color: black;
-  fill: #ffffff07;
-  // add shadow to the inner circle svg
-  filter: drop-shadow(3px 5px 2px #000000);
+  fill: #ffffff0a;
+  stroke: none;
+  filter: drop-shadow(0 0 4px #0006);
 }
